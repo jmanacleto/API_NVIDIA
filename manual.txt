@@ -1,0 +1,49 @@
+# Instrução Para Execução do Projeto:
+ 
+# Necessidades do projeto
+Docker descktop instalado
+Conta no Docker (usuário e senha)
+API Key da Nvidia
+ 
+ 
+# Crie um ambiente virtual
+python -m venv .env
+ 
+# Ative o ambiente
+.venv\Scripts\activate
+ 
+# Instale as dependências
+pip install -r requirements.txt
+ 
+ 
+### Terminal 1 - Backend
+#faça login no Docker
+docker login -u <seu-usuario>
+ 
+# Crie o container Docker
+docker run --name vectordb -dit -p 6333:6333 qdrant/qdrant
+ 
+# Popule o banco de dados vetorial
+python rag.py Documentos
+ 
+# Acesse o Dashboard (do Qdrant - para ver o banco de dados vetorial)
+http://localhost:6333/dashboard
+ 
+# Inicialize a API
+python start_api.py
+ 
+ 
+### Terminal 2 - Frontend
+# Execute a app web
+streamlit run web_app.py
+ 
+# Desative o ambiente virtual quando concluir o trabalho
+deactivate
+ 
+ 
+__________________________________
+Comandos docker
+Listar os contêineres em execução: docker ps -a
+Parar o contêiner (se estiver em execução): docker stop <nome_do_conteiner>
+Remover o contêiner: docker rm <nome_do_conteiner>
+Renomear o novo contêiner: docker run --name <nome_do_conteiner_new> -dit -p 6333:6333 qdrant/qdrant
